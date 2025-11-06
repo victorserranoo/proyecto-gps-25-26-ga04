@@ -17,7 +17,7 @@ const readline = require('readline');
 const Stripe = require('stripe');
 
 mongoose.set('strictQuery', false);
-
+// Tarea GA04-49-H23.1.2 legada
 const app = express();
 
 // CORS: orígenes configurables por env (comma-separated). Fallback a http://localhost:3000
