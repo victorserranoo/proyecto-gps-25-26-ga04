@@ -20,6 +20,8 @@ mongoose.set('strictQuery', false);
 // Tarea GA04-49-H23.1.2 legada
 const app = express();
 
+// Tarea GA04-14 H9.3 Webhook Stripe creación de pedido legada
+
 // CORS: orígenes configurables por env (comma-separated). Fallback a http://localhost:3000
 const rawOrigins = process.env.CORS_ORIGINS || 'http://localhost:3000';
 const CORS_ORIGINS = rawOrigins.split(',').map(o => o.trim());
