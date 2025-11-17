@@ -10,6 +10,8 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { Box, Typography } from '@mui/material';
 import axios from 'axios';
 
+// Tarea GA04-46-H17.2-Finalizar-compra-desde-UI-checkout- legada
+
 // Tarea GA04-44-H17.1-UI-del-carrito-frontend legada
 const CarritoPage = () => {
   const { cartItems, updateQuantity, removeFromCart } = useContext(CartContext);
