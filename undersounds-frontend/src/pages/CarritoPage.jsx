@@ -1,4 +1,5 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
+// ...existing code...
 import { CartContext } from '../context/CartContext';
 import { AuthContext } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
@@ -10,11 +11,14 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { Box, Typography } from '@mui/material';
 import axios from 'axios';
 
+// Tarea GA04-46-H17.2-Finalizar-compra-desde-UI-checkout- legada
 
+// Tarea GA04-44-H17.1-UI-del-carrito-frontend legada
 const CarritoPage = () => {
   const { cartItems, updateQuantity, removeFromCart } = useContext(CartContext);
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
+  const [acceptedTerms, setAcceptedTerms] = useState(false); // <-- añadido
 
   // Calcular el total considerando la cantidad de cada producto
   const total = cartItems.reduce((sum, item) => sum + item.price * (item.quantity || 1), 0);
@@ -35,6 +39,13 @@ const CarritoPage = () => {
       alert("El carrito está vacío. Agrega productos antes de proceder al pago.");
       return;
     }
+
+    // Comprobación de aceptación de términos antes de continuar
+    if (!acceptedTerms) {
+      alert('Debes aceptar los términos y condiciones para proceder a la compra.');
+      return;
+    }
+
     if (!user) {
       // Redirigir a la página de login si el usuario no está logueado
       navigate('/login');
@@ -61,6 +72,37 @@ const CarritoPage = () => {
       <div className="cart-summary">
         <h2>Resumen</h2>
         <p>Total: ${total.toFixed(2)}</p>
+
+        {/* ------------------ bloque de términos ------------------ */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '12px' }}>
+          <label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }}>
+            <input
+              type="checkbox"
+              checked={acceptedTerms}
+              onChange={(e) => setAcceptedTerms(e.target.checked)}
+            />
+            Acepto los términos y condiciones
+          </label>
+          <button
+            type="button"
+            onClick={() => {
+              // Mostrar términos; reemplazar por modal o página dedicada si se desea
+              alert('Términos y condiciones:\n\nAl realizar la compra aceptas las condiciones de uso y política de devoluciones. (Reemplaza este texto por los términos reales de tu aplicación).');
+            }}
+            style={{
+              background: 'transparent',
+              border: 'none',
+              color: '#1976d2',
+              textDecoration: 'underline',
+              cursor: 'pointer',
+              padding: 0,
+            }}
+          >
+            Ver términos
+          </button>
+        </div>
+        {/* --------------------------------------------------------- */}
+
         <button className="proceed-button" onClick={handleCheckout}>
           Proceder al pago
         </button>
