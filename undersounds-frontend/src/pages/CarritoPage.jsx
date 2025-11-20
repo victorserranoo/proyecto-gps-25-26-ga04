@@ -1,5 +1,4 @@
 import React, { useContext, useState } from 'react';
-// ...existing code...
 import { CartContext } from '../context/CartContext';
 import { AuthContext } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
@@ -14,14 +13,22 @@ import axios from 'axios';
 // Tarea GA04-46-H17.2-Finalizar-compra-desde-UI-checkout- legada
 
 // Tarea GA04-44-H17.1-UI-del-carrito-frontend legada
+
+// Tarea GA04-37-H18.2-Contexts-Player-y-Cart legada
+
 const CarritoPage = () => {
   const { cartItems, updateQuantity, removeFromCart } = useContext(CartContext);
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
-  const [acceptedTerms, setAcceptedTerms] = useState(false); // <-- añadido
+  const [acceptedTerms, setAcceptedTerms] = useState(false);
 
   // Calcular el total considerando la cantidad de cada producto
   const total = cartItems.reduce((sum, item) => sum + item.price * (item.quantity || 1), 0);
+
+  if (!acceptedTerms) {
+    alert("Debes aceptar los términos y condiciones antes de proceder al pago.");
+    return;
+  }
 
   const handlePago = async () => {
     try {
@@ -39,13 +46,6 @@ const CarritoPage = () => {
       alert("El carrito está vacío. Agrega productos antes de proceder al pago.");
       return;
     }
-
-    // Comprobación de aceptación de términos antes de continuar
-    if (!acceptedTerms) {
-      alert('Debes aceptar los términos y condiciones para proceder a la compra.');
-      return;
-    }
-
     if (!user) {
       // Redirigir a la página de login si el usuario no está logueado
       navigate('/login');
@@ -55,7 +55,7 @@ const CarritoPage = () => {
     // Crear el resumen del pedido: items del carrito y total (añadiendo, por ejemplo, gastos de envío)
     const orderSummary = {
       items: cartItems,
-      total: total + 5  // Puedes ajustar el coste de envío según corresponda
+      total: total 
     };
   
     // Guardar el resumen en localStorage
@@ -71,7 +71,7 @@ const CarritoPage = () => {
     <div className="carrito-page">
       <div className="cart-summary">
         <h2>Resumen</h2>
-        <p>Total: ${total.toFixed(2)}</p>
+        <p>Total: {total.toFixed(2)}€</p>
 
         {/* ------------------ bloque de términos ------------------ */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '12px' }}>
@@ -134,7 +134,7 @@ const CarritoPage = () => {
                 <Box sx={{ flex: 1, ml: 2 }}>
                   <Typography variant="subtitle1">{item.name}</Typography>
                   <Typography variant="body2">
-                    ${item.price.toFixed(2)}
+                    {item.price.toFixed(2)}€
                   </Typography>
                 </Box>
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
