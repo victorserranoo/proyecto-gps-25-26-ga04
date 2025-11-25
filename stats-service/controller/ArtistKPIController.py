@@ -417,6 +417,7 @@ async def get_trending(genre: Optional[str] = None, period: str = "week", limit:
 
     return await _get_cached(key, ttl, _compute)
 
+# tarea GA04-27-H12.1 Exportar métricas por rango legada
 # GET /stats/export
 @router.get("/stats/export")
 async def export_metrics(type: str = "plays", startDate: Optional[str] = None, endDate: Optional[str] = None, format: str = "csv"):
