@@ -190,6 +190,7 @@ async def http_get_with_cb(client: httpx.AsyncClient, url: str, **kwargs):
 # ============================================================
 # CACHE CON LÍMITE LRU + TTL
 # ============================================================
+# Tarea GA04-24-H11.1.1-Implementación-de-cache-y-TTL legada 
 # Configuración vía env vars 
 CACHE_MAX_SIZE = int(os.getenv("CACHE_MAX_SIZE", "500"))      # máximo 500 entradas
 CACHE_DEFAULT_TTL = int(os.getenv("CACHE_DEFAULT_TTL", "3600"))  # 1 hora por defecto
